@@ -54,21 +54,43 @@ var quizQuestion6 = {
 
 var quizQuestion7 = {
     question: "CSS: What are the default values for a \"dispay: flex\" in terms of \"flex-direction\", \"flax-wrap\", \"justify-content\", and \"align-items\"?",
-    answers: ["row nowrap flex-start stretch", "row wrap space-around cener", "column nowrap space-between flex-end", "column-reverse wrap flex-end flex-start"],
+    answers: ["row nowrap flex-start stretch", "row wrap space-around center", "column nowrap space-between flex-end", "column-reverse wrap flex-end flex-start"],
     correctAnswer: 0
 };
 
 var quizQuestion8 = {
-    question: "CSS: Which part of the \"box model\" acts as a forcefield to keep elemeents of the page spaced apart?",
+    question: "CSS: Which part of the \"box model\" acts as a force-field to keep elements of the page spaced apart?",
     answers: ["content", "padding", "border", "margin"],
     correctAnswer: 3
 };
 
 var quizQuestion9 = {
-    question: "Javascript: What is the format to begin a for loop?",
-    answers: ["row nowrap flex-start stretch", "row wrap space-around cener", "column nowrap space-between flex-end", "column-reverse wrap flex-end flex-start"],
+    question: "Javascript: What is the format to begin a for loop that will repeat 10 times?",
+    answers: ["for.loop=repeat(10){}", "for (i=10) {}", "for (i=0; i <10; i++) {}", "for (i++ <=10) {}"],
+    correctAnswer: 2
+};
+
+var quizQuestion10 = {
+    question: "Javascript: What method would we use to register a click on a webpage?",
+    answers: [".registerClick()", ".addEventListener()", "if (clicked = true) {}", "if (button.active = true) {}"],
+    correctAnswer: 1
+};
+
+var quizQuestion11 = {
+    question: "Javascript: Which of these is NOT a way to target elements from the DOM (document object model)?",
+    answers: [".document.grabElement()", ".document.querySelector()", ".document.getElementById()", ".document.querySelectorAll()"],
     correctAnswer: 0
 };
+
+var quizQuestion12 = {
+    question: "Javascript: Which of these is NOT a valid datatype?",
+    answers: ["number", "boolean", "case", "object"],
+    correctAnswer: 2
+};
+
+function randomizeQuestions () {
+    // TODO: plug in 10 of the above 12 questions onto the page in a random order
+}
 
 function countDownTime () {
     var gameClock = setInterval(function () {
@@ -130,6 +152,7 @@ function advanceQuestion () {
 }
 
 function endGame() {
+    // TODO: create score page, save the scores to local storage
     window.location.href = "./scores.html";
 }
 
