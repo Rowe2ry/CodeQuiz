@@ -92,7 +92,7 @@ transition: transform 750ms ease-in-out;
     margin-bottom: 0.875em;
 }
 
-.difficulty {
+.multiple-choice {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
