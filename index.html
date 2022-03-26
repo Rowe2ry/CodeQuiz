@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Quiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/reset.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+    <header class="head-foot my-header">
+        <h1 class="game-title">Coding Quiz Game</h1>
+        <h2 class="author">By Chris Rowe 2022</h2>
+    </header>
+
+    <section class="game-card active">
+        <div class="card-header">
+            <h3 class="card-info">Welcome</h3>
+        </div>
+        <div class="question">
+            <p>Lets test your web development coding knowledge. There will be 10 questions. Choose your difficulty level below to start the countdown.</p>
+            <form class="difficulty">
+                <div>
+                    <input type="button" id="dif-easy" name="easy" value="1" class="choice">
+                    <label for="dif-easy">Easy <span class="dif-desc">2 minutes | 3 second time penalty</span></label>
+                </div>
+                <div>
+                    <input type="button" id="dif-med" name="medium" value="2" class="choice">
+                    <label for="dif-med">Intermediate <span class="dif-desc">1 minute 45 seconds | 5 second time penalty</span></label>
+                </div>
+                <div>
+                    <input type="button" id="dif-hrd" name="hard" value="3" class="choice">
+                    <label for="dif-hrd">Hard <span class="dif-desc">1 minute 15 seconds | 5 second time penalty</span></label>
+                </div>
+                <div>
+                    <input type="button" id="dif-easy" name="expert" value="4" class="choice">
+                    <label for="dif-easy">Expert <span class="dif-desc">50 seconds | 10 second time penalty</span></label>
+                </div>
+            </form>
+        </div>
+    </section>
+    <section class="game-card queued"></section>
+    <section class="game-card"></section>
+    <section class="game-card"></section>
+    <section class="game-card"></section>
+    <section class="game-card"></section>
+    <section class="game-card"></section>
+    <section class="game-card"></section>
+    <section class="game-card"></section>
+    <section class="game-card"></section>
+    <section class="game-card"></section>
+    <section class="game-card"></section>
+
+    <footer class="head-foot my-footer">
+        <p class="game-clock">
+            00:00
+        </p>
+        <p class="current-score">
+            00/100
+        </p>
+    </footer>
+
+</body>
+</html>

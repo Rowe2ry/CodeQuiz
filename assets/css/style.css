@@ -1,0 +1,134 @@
+:root {
+    box-sizing: border-box;
+    --light-blue-clr: #b0c7ff;
+    --medium-blue-clr: #647ec2;
+    --dark-blue-clr: #274593;
+}
+
+* {
+    margin:0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    width: 100vw;
+    height: 100vh;
+}
+
+.head-foot {
+    margin: 0;
+    background-image: linear-gradient( var(--light-blue-clr), var(--dark-blue-clr));
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    padding: 1.25em;
+}
+
+
+.my-header, .game-card, .question {
+    display: flex;
+    flex-flow:column;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-title {
+    font-size: 5vw;
+    color: #FFF;
+    padding: .25em;
+}
+
+.author {
+    color: #fff;
+    font-size: 1.875vw;
+    padding: .5em;
+}
+
+.game-card {
+    align-self: center;
+    min-width: 20rem;
+    max-width: 80ch;
+    border: .125em solid #aaaaaa;
+    border-radius: 2em;
+    overflow: hidden;
+    transform: translateX(-100vw);
+    display: none;
+}
+
+.queued {
+    transform: translateX(100vw);
+    visibility: none;
+}
+
+.active {
+    display: flex;
+    flex-flow:column;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(0);
+}
+
+.card-header {
+background-color: var(--medium-blue-clr);
+font-size: 3vw;
+padding: .75em 0;
+width: 100%;
+text-align: center;
+color: #fff;
+transition: transform 750ms ease-in-out;
+}
+
+.question {
+    font-size: 1.125rem;
+    margin: 0.625em 1.125em 0.875em;
+}
+
+.question p {
+    margin-bottom: 0.875em;
+}
+
+.difficulty {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .375em;
+}
+
+.choice {
+    background-color: var(--dark-blue-clr);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 0.1875em 2em;
+    margin: .1875em 1em;
+}
+
+.choice:hover, .choice:focus {
+    background-color: var(--light-blue-clr);
+}
+
+.dif-desc {
+    color: #aaaaaa;
+    font-size: .875rem;
+    margin-left: 1.5em;
+    right: 0;
+}
+
+.my-footer {
+    display: flex;
+    flex-flow:row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.game-clock, .current-score{
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+    font-size: 2rem;
+    color:#fff;
+}
