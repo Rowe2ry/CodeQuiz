@@ -19,6 +19,8 @@ body {
     align-items: stretch;
     width: 100vw;
     height: 100vh;
+    transition: all 400ms ease-in-out;
+    overflow: hidden;
 }
 
 .head-foot {
@@ -50,6 +52,10 @@ body {
 }
 
 .game-card {
+    display: flex;
+    flex-flow:column;
+    justify-content: center;
+    align-items: center;
     align-self: center;
     min-width: 20rem;
     max-width: 80ch;
@@ -57,20 +63,17 @@ body {
     border-radius: 2em;
     overflow: hidden;
     transform: translateX(-100vw);
-    display: none;
+    position: absolute;
+    top: 20rem; 
 }
 
 .queued {
     transform: translateX(100vw);
-    visibility: none;
 }
 
 .active {
-    display: flex;
-    flex-flow:column;
-    justify-content: center;
-    align-items: center;
     transform: translateX(0);
+    transition: all 400ms ease-in-out;
 }
 
 .card-header {
@@ -80,7 +83,6 @@ padding: .75em 0;
 width: 100%;
 text-align: center;
 color: #fff;
-transition: transform 750ms ease-in-out;
 }
 
 .question {
