@@ -141,3 +141,8 @@ color: #fff;
     font-size: 2rem;
     color:#fff;
 }
+
+.invisible {
+    position: fixed;
+    transform: scale(0) translateY(-200vh);
+}

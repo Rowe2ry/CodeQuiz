@@ -1,6 +1,7 @@
 /* =========================================================================
  * Identifying different DOM elements
  * ========================================================================= */
+
 // identifying the button inputs for selecting the difficulty bt ID
 // specifically since its the most important question
 var difficultyEasy = document.querySelector("#dif-easy");
@@ -8,7 +9,7 @@ var difficultyIntermediate = document.querySelector("#dif-med");
 var difficultyHard = document.querySelector("#dif-hrd");
 var difficultyExpert = document.querySelector("#dif-expert");
 // any radio button on any queston card
-var answerBtn = document.querySelector(".choice");
+var answerBtn = document.querySelectorAll(".choice");
 
 // minutes and seconds for the count down timer of the game
 var cdMins = document.querySelector("#minutes");
@@ -17,8 +18,18 @@ var cdSecs = document.querySelector("#seconds");
 // the score being kept as the game plays (the element on the page);
 var playerScore = document.querySelector("#correct");
 
-// just a value holding the score
+/* =========================================================================
+ * Global scope variable declarations
+ * ========================================================================= */
+
+// just starting values holding the score, penalty, and time
 var currentScore = 0;
+var minsRemaining = 0;
+var secondsRemaining = 50;
+var timePenalty = 0;
+
+// giving the active question a zero index for the difficulty selection card
+var activeQuestion = 0; //passing this into several functions as "currentQ"
 
 /* =========================================================================
  * Library of questions and answers as objects
@@ -63,7 +74,7 @@ var quizQuestion6 = {
 var quizQuestion7 = {
     question: "CSS: What are the default values for a \"dispay: flex\" in terms of \"flex-direction\", \"flax-wrap\", \"justify-content\", and \"align-items\"?",
     answers: ["row nowrap flex-start stretch", "row wrap space-around center", "column nowrap space-between flex-end", "column-reverse wrap flex-end flex-start"],
-    correctAnswer: 0
+    correctAnswer: 0 // index #
 };
 
 var quizQuestion8 = {
@@ -97,7 +108,19 @@ var quizQuestion12 = {
 };
 
 // array of the defined objects above
-questionSequence = [quizQuestion1, quizQuestion2, quizQuestion3, quizQuestion4, quizQuestion5, quizQuestion6, quizQuestion7, quizQuestion8, quizQuestion9, quizQuestion10, quizQuestion11, quizQuestion12];
+questionSequence = [
+    quizQuestion1,
+    quizQuestion2,
+    quizQuestion3,
+    quizQuestion4,
+    quizQuestion5,
+    quizQuestion6,
+    quizQuestion7,
+    quizQuestion8,
+    quizQuestion9,
+    quizQuestion10,
+    quizQuestion11,
+    quizQuestion12 ];
 
 /* =========================================================================
  * Function Definitions
@@ -137,9 +160,6 @@ function randomizeQuestions(inputArray) {
         console.log("The shuffled array has " + tempHoldingArray.length + " objects.");
         return tempHoldingArray;
     }
-
-    // we pass our original question list of 12 objects through the randomizer function
-shuffledSequence = randomizeQuestions(questionSequence);
 
     function populatePage(inputArray) {
         // once for each element in the array
@@ -184,9 +204,6 @@ shuffledSequence = randomizeQuestions(questionSequence);
         }
     }
 
-    // runs the above defined function to get our quiz in place
-populatePage(shuffledSequence);
-
 // starts the game timer
 function countDownTime () {
     // uses the set interval function
@@ -220,11 +237,7 @@ function countDownTime () {
             endGame();            
         }
     }, 1000)
-
 }
-
-// giving the active question a zero index for the difficulty selection card
-var activeQuestion = 0; //pasing this into the below functions as "currentQ"
 
 // this updates the question the player is looking at
 function advanceQuestion (currentQ) {
@@ -253,110 +266,52 @@ function advanceQuestion (currentQ) {
     };
 }
 
-// add an event listener for each question. check the answer
-// and either increase the score or decrease the time
 function answerQuestion (currentQ) {
-    // just get the parent container for this question
-    var answered1 = document.querySelector("#q" + currentQ + "01");
-    var answered2 = document.querySelector("#q" + currentQ + "02");
-    var answered3 = document.querySelector("#q" + currentQ + "03");
-    var answered4 = document.querySelector("#q" + currentQ + "04");
-    if (answered1.checked) {
-        if (answered1.getAttribute("class") = "correct") {
-            currentScore += 10;
-            playerScore.textContent = currentScore;
-            advanceQuestion();
-        } else {
-            if (secondsRemaining > timePenalty) {
-                secondsRemaining -= timePenalty;
-                cdSecs.textContent = secondsRemaining;
-                advanceQuestion();
-            } else if (minsRemaining === 1) {
-                difference = timePenalty - secondsRemaining;
-                minsRemaining = 0;
-                cdMins.textContent = minsRemaining;
-                secondsRemaining = 60 - difference;
-                cdSecs.textContent = secondsRemaining;
-                advanceQuestion();
-            } else {
-                endGame();
+    var answerCorrectly = false;
+    
+    for (i=0; i < 4; i++) {
+        // var currentSubmission = document.getElementById("q" + currentQ + "O" + (i + 1));
+        inputString = "q" + currentQ + "O" + (i + 1);
+        var currentSubmission = document.getElementById(inputString);
+        if (currentSubmission.checked === true) {
+            if (submittedAnswer.getAttribute("class") = "correct") {
+                answerCorrectly = true;
+                currentScore += 10;
+                playerScore.textContent = currentScore;
+                advanceQuestion(currentQ);
+                return;
             }
         }
     }
-    if (answered2.checked) {
-        if (answered1.getAttribute("class") = "correct") {
-            currentScore += 10;
-            playerScore.textContent = currentScore;
-            advanceQuestion();
+    if (answerCorrectly === false) {
+        if (secondsRemaining > timePenalty) {
+            secondsRemaining -= timePenalty;
+            cdSecs.textContent = secondsRemaining;
+            advanceQuestion(currentQ);
+        } else if (minsRemaining === 1) {
+            difference = timePenalty - secondsRemaining;
+            minsRemaining = 0;
+            cdMins.textContent = minsRemaining;
+            secondsRemaining = 60 - difference;
+            cdSecs.textContent = secondsRemaining;
+            advanceQuestion(currentQ);
         } else {
-            if (secondsRemaining > timePenalty) {
-                secondsRemaining -= timePenalty;
-                cdSecs.textContent = secondsRemaining;
-                advanceQuestion();
-            } else if (minsRemaining === 1) {
-                difference = timePenalty - secondsRemaining;
-                minsRemaining = 0;
-                cdMins.textContent = minsRemaining;
-                secondsRemaining = 60 - difference;
-                cdSecs.textContent = secondsRemaining;
-                advanceQuestion();
-            } else {
-                endGame();
-            }
+            endGame();
         }
     }
-    if (answered3.checked) {
-        if (answered1.getAttribute("class") = "correct") {
-            currentScore += 10;
-            playerScore.textContent = currentScore;
-            advanceQuestion();
-        } else {
-            if (secondsRemaining > timePenalty) {
-                secondsRemaining -= timePenalty;
-                cdSecs.textContent = secondsRemaining;
-                advanceQuestion();
-            } else if (minsRemaining === 1) {
-                difference = timePenalty - secondsRemaining;
-                minsRemaining = 0;
-                cdMins.textContent = minsRemaining;
-                secondsRemaining = 60 - difference;
-                cdSecs.textContent = secondsRemaining;
-                advanceQuestion();
-            } else {
-                endGame();
-            }
-        }
-    }
-    if (answered4.checked) {
-        if (answered1.getAttribute("class") = "correct") {
-            currentScore += 10;
-            playerScore.textContent = currentScore;
-            advanceQuestion();
-        } else {
-            if (secondsRemaining > timePenalty) {
-                secondsRemaining -= timePenalty;
-                cdSecs.textContent = secondsRemaining;
-                advanceQuestion();
-            } else if (minsRemaining === 1) {
-                difference = timePenalty - secondsRemaining;
-                minsRemaining = 0;
-                cdMins.textContent = minsRemaining;
-                secondsRemaining = 60 - difference;
-                cdSecs.textContent = secondsRemaining;
-                advanceQuestion();
-            } else {
-                endGame();
-            }
-        }
-    }
-}
-
-answerBtn.addEventListener("click", answerQuestion);
+};
 
 function endGame() {
     // TODO: create score page, save the scores to local storage
     window.location.href = "./scores.html";
 }
+
+/* =========================================================================
+ * Active Event Listeners
+ * ========================================================================= */
+
+//looking for answer submissions
+answerBtn.onclick = answerQuestion(activeQuestion);
 
 // if the players wants to play on easy
 difficultyEasy.addEventListener("click", function () {
@@ -412,3 +367,8 @@ difficultyExpert.addEventListener("click", function () {
     countDownTime();
     advanceQuestion();
 });
+
+// we pass our original question list of 12 objects through the randomizer function
+shuffledSequence = randomizeQuestions(questionSequence);
+// runs the above defined function to get our onto the page
+populatePage(shuffledSequence);
