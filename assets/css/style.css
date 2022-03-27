@@ -92,6 +92,8 @@ color: #fff;
 
 .question p {
     margin-bottom: 0.875em;
+    line-height: 1.5em;
+    text-align: center;
 }
 
 .multiple-choice {
@@ -101,7 +103,8 @@ color: #fff;
     gap: .375em;
 }
 
-.choice {
+.choice,
+.diffChoice {
     background-color: var(--dark-blue-clr);
     color: #fff;
     font-size: 1rem;
@@ -110,8 +113,12 @@ color: #fff;
     margin: .1875em 1em;
 }
 
-.choice:hover, .choice:focus {
+.choice:hover,
+.choice:focus-visible,
+.diffChoice:hover,
+.diffChoice:focus-visible {
     background-color: var(--light-blue-clr);
+    box-shadow: 3px 3px 5px #274593;
 }
 
 .dif-desc {

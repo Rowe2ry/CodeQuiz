@@ -14,7 +14,7 @@
 <body>
     <header class="head-foot my-header">
         <h1 class="game-title">Coding Quiz Game</h1>
-        <h2 class="author">By Chris Rowe 2022</h2>
+        <h2 class="author">By Chris Rowe — March 2022</h2>
     </header>
 
     <section id="welcome" class="game-card active">
@@ -25,19 +25,19 @@
             <p>Lets test your web development coding knowledge. There will be 10 questions. Choose your difficulty level below to start the countdown.</p>
             <form class="multiple-choice">
                 <div class="opt-1">
-                    <input type="button" id="dif-easy" name="easy" value="1" class="choice diffChoice">
+                    <input type="radio" id="dif-easy" name="difficultySet" value="1" class="diffChoice" tabindex="-1">
                     <label for="dif-easy">Easy <span class="dif-desc">2 minutes | 3 second time penalty</span></label>
                 </div>
                 <div class="opt-2">
-                    <input type="button" id="dif-med" name="medium" value="2" class="choice diffChoice">
+                    <input type="radio" id="dif-med" name="difficultySet" value="2" class="diffChoice" tabindex="-1">
                     <label for="dif-med">Intermediate <span class="dif-desc">1 minute 45 seconds | 5 second time penalty</span></label>
                 </div>
                 <div class="opt-3">
-                    <input type="button" id="dif-hrd" name="hard" value="3" class="choice diffChoice">
+                    <input type="radio" id="dif-hrd" name="difficultySet" value="3" class="diffChoice" tabindex="-1">
                     <label for="dif-hrd">Hard <span class="dif-desc">1 minute 15 seconds | 5 second time penalty</span></label>
                 </div>
                 <div class="opt-4">
-                    <input type="button" id="dif-expert" name="expert" value="4" class="choice diffChoice">
+                    <input type="radio" id="dif-expert" name="difficultySet" value="4" class="diffChoice" tabindex="-1">
                     <label for="dif-expert">Expert <span class="dif-desc">50 seconds | 10 second time penalty</span></label>
                 </div>
             </form>
@@ -51,19 +51,19 @@
             <p id ="q1Text"></p>
             <form class="multiple-choice">
                 <div class="opt-1">
-                    <input type="button" id="q1O1" name="q1opt1" value="1" class="choice">
+                    <input type="radio" id="q1O1" name="ques1Answer" value="1" class="choice" tabindex="-1">
                     <label id="q1O1label" for="q1O1"></label>
                 </div>
                 <div class="opt-2">
-                    <input type="button" id="q1O2" name="q1opt2" value="2" class="choice">
+                    <input type="radio" id="q1O2" name="ques1Answer" value="2" class="choice" tabindex="-1">
                     <label id="q1O2label" for="q1O2"></label>
                 </div>
                 <div class="opt-3">
-                    <input type="button" id="q1O3" name="q1opt3" value="3" class="choice">
+                    <input type="radio" id="q1O3" name="ques1Answer" value="3" class="choice" tabindex="-1">
                     <label id="q1O3label" for="q1O3"></label>
                 </div>
                 <div class="opt-4">
-                    <input type="button" id="q1O4" name="q1opt4" value="4" class="choice">
+                    <input type="radio" id="q1O4" name="ques1Answer" value="4" class="choice" tabindex="-1">
                     <label id="q1O4label" for="q1O4"></label>
                 </div>
             </form>
@@ -77,19 +77,19 @@
             <p id ="q2Text"></p>
             <form class="multiple-choice">
                 <div class="opt-1">
-                    <input type="button" id="q2O1" name="q2opt1" value="1" class="choice">
+                    <input type="radio" id="q2O1" name="ques2Answer" value="1" class="choice" tabindex="-1">
                     <label id="q2O1label" for="q2O1"></label>
                 </div>
                 <div class="opt-2">
-                    <input type="button" id="q2O2" name="q2opt2" value="2" class="choice">
+                    <input type="radio" id="q2O2" name="ques2Answer" value="2" class="choice" tabindex="-1">
                     <label id="q2O2label" for="q2O2"></label>
                 </div>
                 <div class="opt-3">
-                    <input type="button" id="q2O3" name="q2opt3" value="3" class="choice">
+                    <input type="radio" id="q2O3" name="ques2Answer" value="3" class="choice" tabindex="-1">
                     <label id="q2O3label" for="q2O3"></label>
                 </div>
                 <div class="opt-4">
-                    <input type="button" id="q2O4" name="q2opt4" value="4" class="choice">
+                    <input type="radio" id="q2O4" name="ques2Answer" value="4" class="choice" tabindex="-1">
                     <label id="q2O4label" for="q2O4"></label>
                 </div>
             </form>
@@ -103,19 +103,19 @@
             <p id ="q3Text"></p>
             <form class="multiple-choice">
                 <div class="opt-1">
-                    <input type="button" id="q3O1" name="q3opt1" value="1" class="choice">
+                    <input type="radio" id="q3O1" name="ques3Answer" value="1" class="choice" tabindex="-1">
                     <label id="q3O1label" for="q3O1"></label>
                 </div>
                 <div class="opt-2">
-                    <input type="button" id="q3O2" name="q3opt2" value="2" class="choice">
+                    <input type="radio" id="q3O2" name="ques3Answer" value="2" class="choice" tabindex="-1">
                     <label id="q3O2label" for="q3O2"></label>
                 </div>
                 <div class="opt-3">
-                    <input type="button" id="q3O3" name="q3opt3" value="3" class="choice">
+                    <input type="radio" id="q3O3" name="ques3Answer" value="3" class="choice" tabindex="-1">
                     <label id="q3O3label" for="q3O3"></label>
                 </div>
                 <div class="opt-4">
-                    <input type="button" id="q3O4" name="q3opt4" value="4" class="choice">
+                    <input type="radio" id="q3O4" name="ques3Answer" value="4" class="choice" tabindex="-1">
                     <label id="q3O4label" for="q3O4"></label>
                 </div>
             </form>
@@ -129,19 +129,19 @@
             <p id ="q4Text"></p>
             <form class="multiple-choice">
                 <div class="opt-1">
-                    <input type="button" id="q4O1" name="q4opt1" value="1" class="choice">
+                    <input type="radio" id="q4O1" name="ques4Answer" value="1" class="choice" tabindex="-1">
                     <label id="q4O1label" for="q4O1"></label>
                 </div>
                 <div class="opt-2">
-                    <input type="button" id="q4O2" name="q4opt2" value="2" class="choice">
+                    <input type="radio" id="q4O2" name="ques4Answer" value="2" class="choice" tabindex="-1">
                     <label id="q4O2label" for="q4O2"></label>
                 </div>
                 <div class="opt-3">
-                    <input type="button" id="q4O3" name="q4opt3" value="3" class="choice">
+                    <input type="radio" id="q4O3" name="ques4Answer" value="3" class="choice" tabindex="-1">
                     <label id="q4O3label" for="q4O3"></label>
                 </div>
                 <div class="opt-4">
-                    <input type="button" id="q4O4" name="q4opt4" value="4" class="choice">
+                    <input type="radio" id="q4O4" name="ques4Answer" value="4" class="choice" tabindex="-1">
                     <label id="q4O4label" for="q4O4"></label>
                 </div>
             </form>
@@ -155,19 +155,19 @@
             <p id ="q5Text"></p>
             <form class="multiple-choice">
                 <div class="opt-1">
-                    <input type="button" id="q5O1" name="q5opt1" value="1" class="choice">
+                    <input type="radio" id="q5O1" name="ques5Answer" value="1" class="choice" tabindex="-1">
                     <label id="q5O1label" for="q5O1"></label>
                 </div>
                 <div class="opt-2">
-                    <input type="button" id="q5O2" name="q5opt2" value="2" class="choice">
+                    <input type="radio" id="q5O2" name="ques5Answer" value="2" class="choice" tabindex="-1">
                     <label id="q5O2label" for="q5O2"></label>
                 </div>
                 <div class="opt-3">
-                    <input type="button" id="q5O3" name="q5opt3" value="3" class="choice">
+                    <input type="radio" id="q5O3" name="ques5Answer" value="3" class="choice" tabindex="-1">
                     <label id="q5O3label" for="q5O3"></label>
                 </div>
                 <div class="opt-4">
-                    <input type="button" id="q5O4" name="q5opt4" value="4" class="choice">
+                    <input type="radio" id="q5O4" name="ques5Answer" value="4" class="choice" tabindex="-1">
                     <label id="q5O4label" for="q5O4"></label>
                 </div>
             </form>
@@ -181,19 +181,19 @@
             <p id ="q6Text"></p>
             <form class="multiple-choice">
                 <div class="opt-1">
-                    <input type="button" id="q6O1" name="q6opt1" value="1" class="choice">
+                    <input type="radio" id="q6O1" name="ques6Answer" value="1" class="choice" tabindex="-1">
                     <label id="q6O1label" for="q6O1"></label>
                 </div>
                 <div class="opt-2">
-                    <input type="button" id="q6O2" name="q6opt2" value="2" class="choice">
+                    <input type="radio" id="q6O2" name="ques6Answer" value="2" class="choice" tabindex="-1">
                     <label id="q6O2label" for="q6O2"></label>
                 </div>
                 <div class="opt-3">
-                    <input type="button" id="q6O3" name="q6opt3" value="3" class="choice">
+                    <input type="radio" id="q6O3" name="ques6Answer" value="3" class="choice" tabindex="-1">
                     <label id="q6O3label" for="q6O3"></label>
                 </div>
                 <div class="opt-4">
-                    <input type="button" id="q6O4" name="q6opt4" value="4" class="choice">
+                    <input type="radio" id="q6O4" name="ques6Answer" value="4" class="choice" tabindex="-1">
                     <label id="q6O4label" for="q6O4"></label>
                 </div>
             </form>
@@ -207,19 +207,19 @@
             <p id ="q7Text"></p>
             <form class="multiple-choice">
                 <div class="opt-1">
-                    <input type="button" id="q7O1" name="q7opt1" value="1" class="choice">
+                    <input type="radio" id="q7O1" name="ques7Answer" value="1" class="choice" tabindex="-1">
                     <label id="q7O1label" for="q7O1"></label>
                 </div>
                 <div class="opt-2">
-                    <input type="button" id="q7O2" name="q7opt2" value="2" class="choice">
+                    <input type="radio" id="q7O2" name="ques7Answer" value="2" class="choice" tabindex="-1">
                     <label id="q7O2label" for="q7O2"></label>
                 </div>
                 <div class="opt-3">
-                    <input type="button" id="q7O3" name="q7opt3" value="3" class="choice">
+                    <input type="radio" id="q7O3" name="ques7Answer" value="3" class="choice" tabindex="-1">
                     <label id="q7O3label" for="q7O3"></label>
                 </div>
                 <div class="opt-4">
-                    <input type="button" id="q7O4" name="q7opt4" value="4" class="choice">
+                    <input type="radio" id="q7O4" name="ques7Answer"" value="4" class="choice" tabindex="-1">
                     <label id="q7O4label" for="q7O4"></label>
                 </div>
             </form>
@@ -233,19 +233,19 @@
             <p id ="q8Text"></p>
             <form class="multiple-choice">
                 <div class="opt-1">
-                    <input type="button" id="q8O1" name="q8opt1" value="1" class="choice">
+                    <input type="radio" id="q8O1" name="ques8Answer" value="1" class="choice" tabindex="-1">
                     <label id="q8O1label" for="q8O1"></label>
                 </div>
                 <div class="opt-2">
-                    <input type="button" id="q8O2" name="q8opt2" value="2" class="choice">
+                    <input type="radio" id="q8O2" name="ques8Answer" value="2" class="choice" tabindex="-1">
                     <label id="q8O2label" for="q8O2"></label>
                 </div>
                 <div class="opt-3">
-                    <input type="button" id="q8O3" name="q8opt3" value="3" class="choice">
+                    <input type="radio" id="q8O3" name="ques8Answer" value="3" class="choice" tabindex="-1">
                     <label id="q8O3label" for="q8O3"></label>
                 </div>
                 <div class="opt-4">
-                    <input type="button" id="q8O4" name="q8opt4" value="4" class="choice">
+                    <input type="radio" id="q8O4" name="ques8Answer" value="4" class="choice" tabindex="-1">
                     <label id="q8O4label" for="q8O4"></label>
                 </div>
             </form>
@@ -259,19 +259,19 @@
             <p id ="q9Text"></p>
             <form class="multiple-choice">
                 <div class="opt-1">
-                    <input type="button" id="q9O1" name="q9opt1" value="1" class="choice">
+                    <input type="radio" id="q9O1" name="ques9Answer" value="1" class="choice" tabindex="-1">
                     <label id="q9O1label" for="q9O1"></label>
                 </div>
                 <div class="opt-2">
-                    <input type="button" id="q9O2" name="q9opt2" value="2" class="choice">
+                    <input type="radio" id="q9O2" name="ques9Answer" value="2" class="choice" tabindex="-1">
                     <label id="q9O2label" for="q9O2"></label>
                 </div>
                 <div class="opt-3">
-                    <input type="button" id="q9O3" name="q9opt3" value="3" class="choice">
+                    <input type="radio" id="q9O3" name="ques9Answer" value="3" class="choice" tabindex="-1">
                     <label id="q9O3label" for="q9O3"></label>
                 </div>
                 <div class="opt-4">
-                    <input type="button" id="q9O4" name="q9opt4" value="4" class="choice">
+                    <input type="radio" id="q9O4" name="ques9Answer" value="4" class="choice" tabindex="-1">
                     <label id="q9O4label" for="q9O4"></label>
                 </div>
             </form>
@@ -285,19 +285,19 @@
             <p id ="q10Text"></p>
             <form class="multiple-choice">
                 <div class="opt-1">
-                    <input type="button" id="q10O1" name="q10opt1" value="1" class="choice">
+                    <input type="radio" id="q10O1" name="ques10Answer" value="1" class="choice" tabindex="-1">
                     <label id="q10O1label" for="q10O1"></label>
                 </div>
                 <div class="opt-2">
-                    <input type="button" id="q10O2" name="q10opt2" value="2" class="choice">
+                    <input type="radio" id="q10O2" name="ques10Answer" value="2" class="choice" tabindex="-1">
                     <label id="q10O2label" for="q10O2"></label>
                 </div>
                 <div class="opt-3">
-                    <input type="button" id="q10O3" name="q10opt3" value="3" class="choice">
+                    <input type="radio" id="q10O3" name="ques10Answer" value="3" class="choice" tabindex="-1">
                     <label id="q10O3label" for="q10O3"></label>
                 </div>
                 <div class="opt-4">
-                    <input type="button" id="q10O4" name="q10opt4" value="4" class="choice">
+                    <input type="radio" id="q10O4" name="ques10Answer" value="4" class="choice" tabindex="-1">
                     <label id="q10O4label" for="q10O4"></label>
                 </div>
             </form>
