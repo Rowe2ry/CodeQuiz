@@ -25,7 +25,7 @@ var playerScore = document.querySelector("#correct");
 // just starting values holding the score, penalty, and time
 var currentScore = 0;
 var minsRemaining = 0;
-var secondsRemaining = 0;
+var secondsRemaining = 1;
 var timePenalty = 0;
 
 // giving the active question a zero index for the difficulty selection card
@@ -35,73 +35,73 @@ var activeQuestion = 0; //passing this into several functions as "currentQ"
  * Library of questions and answers as objects
  * ========================================================================= */
 
-var quizQuestion1 = {
+var quizQuestion0 = {
     question: "HTML: What does the \"Title\" tag inside the \"head\" tag of an HTML file do?",
     answers: ["Acts as a header", "Names the HTML file", "Displays in the browser tab", "Displays at the top of the page"],
     correctAnswer: 2 // index #
 };
 
-var quizQuestion2 = {
+var quizQuestion1 = {
     question: "HTML: Which one of these is NOT a self closing tag?",
     answers: ["img", "link", "br", "script"],
     correctAnswer: 3 // index #
 };
 
-var quizQuestion3 = {
+var quizQuestion2 = {
     question: "HTML: Which of these tags has a default \"display\" property of \"inline\"?",
     answers: ["img - Image", "h1 - Header Level 1", "p - Paragraph", "ol - Ordered List"],
     correctAnswer: 0 // index #
 };
 
-var quizQuestion4 = {
+var quizQuestion3 = {
     question: "HTML: What is the attribute name for \"img\" tags that is used to help screen readers understand an image's content?",
     answers: ["caption", "description", "alt", "desc"],
     correctAnswer: 2 // index #
 };
 
-var quizQuestion5 = {
+var quizQuestion4 = {
     question: "CSS: Which of the following is NOT a valid way to define a color?",
     answers: ["#a1b2c3", "cmky(40, 45, 33, 10)", "rgba(200, 15, 33, 1)", "hsl(128, 88, 44)"],
     correctAnswer: 1 // index #
 };
 
-var quizQuestion6 = {
+var quizQuestion5 = {
     question: "CSS: What is the name of a stylesheet to remove default HTML styling?",
     answers: ["clear-all.css", "remove.css", "blank-slate.css", "reset.css"],
     correctAnswer: 3 // index #
 };
 
-var quizQuestion7 = {
+var quizQuestion6 = {
     question: "CSS: What are the default values for a \"dispay: flex\" in terms of \"flex-direction\", \"flax-wrap\", \"justify-content\", and \"align-items\"?",
     answers: ["row nowrap flex-start stretch", "row wrap space-around center", "column nowrap space-between flex-end", "column-reverse wrap flex-end flex-start"],
     correctAnswer: 0 // index #
 };
 
-var quizQuestion8 = {
+var quizQuestion7 = {
     question: "CSS: Which part of the \"box model\" acts as a force-field to keep elements of the page spaced apart?",
     answers: ["content", "padding", "border", "margin"],
     correctAnswer: 3 // index #
 };
 
-var quizQuestion9 = {
+var quizQuestion8 = {
     question: "Javascript: What is the format to begin a for loop that will repeat 10 times?",
     answers: ["for.loop=repeat(10){}", "for (i=10) {}", "for (i=0; i <10; i++) {}", "for (i++ <=10) {}"],
     correctAnswer: 2 // index #
 };
 
-var quizQuestion10 = {
+var quizQuestion9 = {
     question: "Javascript: What method would we use to register a click on a webpage?",
     answers: [".registerClick()", ".addEventListener()", "if (clicked = true) {}", "if (button.active = true) {}"],
     correctAnswer: 1 // index #
 };
 
-var quizQuestion11 = {
+var quizQuestion10 = {
     question: "Javascript: Which of these is NOT a way to target elements from the DOM (document object model)?",
     answers: [".document.grabElement()", ".document.querySelector()", ".document.getElementById()", ".document.querySelectorAll()"],
     correctAnswer: 0 // index #
 };
 
-var quizQuestion12 = {
+var quizQuestion11 = {
     question: "Javascript: Which of these is NOT a valid datatype?",
     answers: ["number", "boolean", "case", "object"],
     correctAnswer: 2 // index #
@@ -109,6 +109,7 @@ var quizQuestion12 = {
 
 // array of the defined objects above
 questionSequence = [
+    quizQuestion0,
     quizQuestion1,
     quizQuestion2,
     quizQuestion3,
@@ -119,8 +120,7 @@ questionSequence = [
     quizQuestion8,
     quizQuestion9,
     quizQuestion10,
-    quizQuestion11,
-    quizQuestion12 ];
+    quizQuestion11 ];
 
 /* =========================================================================
  * Function Definitions
@@ -132,7 +132,9 @@ questionSequence = [
 function randomizeQuestions(inputArray) {
     // creating an empty array to hold the random results as they are plucked
     // from the array going into the function
+    console.log("I'm shuffling");
     var deconstructedArray = inputArray;
+    console.log("the input array length is " + inputArray.length);
     var tempHoldingArray = [];
     // a for loop will cycle through the whole array pulling a random element
     // one at a time
@@ -145,11 +147,11 @@ function randomizeQuestions(inputArray) {
         // grab that random object and remember it
         var objectToPull = deconstructedArray[randomNumber];
         console.log(objectToPull);
-        // take that object out of the input array
+        // take that object out of the input array, 2nd paramter says to just pull 1 object
         deconstructedArray.splice(randomNumber, 1);
         // add it to the local scope variable holding array
         tempHoldingArray.push(objectToPull);
-        }
+        } // end for loop
         console.log("shuffle completed");
         // remove the object from the front of the list (12 - 1 = 11)
         tempHoldingArray.shift();
@@ -158,6 +160,7 @@ function randomizeQuestions(inputArray) {
         // spit out the new array, these are the 10 quick questions and
         // the order they wil display on this playthrough the game
         console.log("The shuffled array has " + tempHoldingArray.length + " objects.");
+        // output the shuffled array to the variable calling the function
         return tempHoldingArray;
     }
 
@@ -165,15 +168,15 @@ function randomizeQuestions(inputArray) {
         // once for each element in the array
         for (i = 0; i < inputArray.length; i++) {
             // grab the HTML element for asking the question
-            var questionText = document.getElementById("q" + (i + 1) + "Text");
+            var questionText = document.getElementById("q" + (i) + "Text");
             // for the first radio button label
-            var questionOption1 = document.getElementById("q" + (i + 1) + "O1label");
+            var questionOption1 = document.getElementById("q" + (i) + "O0label");
             // for the second radio button label
-            var questionOption2 = document.getElementById("q" + (i + 1) + "O2label");
+            var questionOption2 = document.getElementById("q" + (i) + "O1label");
             // for the third radio button label
-            var questionOption3 = document.getElementById("q" + (i + 1) + "O3label");
+            var questionOption3 = document.getElementById("q" + (i) + "O2label");
             // for the fourth radio button label
-            var questionOption4 = document.getElementById("q" + (i + 1) + "O4label");
+            var questionOption4 = document.getElementById("q" + (i) + "O3label");
             // put the question on the page
             questionText.textContent= inputArray[i].question;
             // put the answer option 1 on the page
@@ -185,10 +188,10 @@ function randomizeQuestions(inputArray) {
             // put the answer option 4 on the page
             questionOption4.textContent = inputArray[i].answers[3];
             // call out the radio buttons for these answers
-            var questionOptionBtn1 = document.getElementById("q" + (i + 1) + "O1");
-            var questionOptionBtn2 = document.getElementById("q" + (i + 1) + "O2");
-            var questionOptionBtn3 = document.getElementById("q" + (i + 1) + "O3");
-            var questionOptionBtn4 = document.getElementById("q" + (i + 1) + "O4");
+            var questionOptionBtn1 = document.getElementById("q" + (i) + "O0");
+            var questionOptionBtn2 = document.getElementById("q" + (i) + "O1");
+            var questionOptionBtn3 = document.getElementById("q" + (i) + "O2");
+            var questionOptionBtn4 = document.getElementById("q" + (i) + "O3");
             // assign correct answers to each form
             var thisAnswer = inputArray[i].correctAnswer;
             // give the button a class of correct
@@ -225,7 +228,7 @@ function countDownTime () {
         if (secondsRemaining === 0 && minsRemaining > 0) {
             secondsRemaining = 59;
             minsRemaining = 0;
-            cdMins.textContent = "";
+            cdMins.textContent = "0";
             cdSecs.textContent = secondsRemaining;
         }
         // this if statement launches the game end sequence by recognizing
@@ -240,6 +243,22 @@ function countDownTime () {
 }
 
 // this updates the question the player is looking at
+function advanceFromStart () {
+    console.log("advancing from welcome page");
+    // grab the current question card that has an active class
+    var currentQuestion = document.querySelector(".active");
+    // look for the next one on the queue
+    var nextQuestion = document.querySelector(".queued");
+    // strip the active class attribute from the current question
+    currentQuestion.setAttribute("class", "game-card");
+    // give it to the card that WAS in the queue before this function was called
+    nextQuestion.setAttribute("class", "game-card active");
+    // queue up the 2nd question (with an index offset of -1)
+    var questionToQueue = document.getElementById("question-1");
+    questionToQueue.setAttribute("class", "game-card queued");
+}
+
+// this updates the question the player is looking at
 function advanceQuestion (currentQ) {
     console.log("advancing from question " + activeQuestion);
     // grab the current question card that has an active class
@@ -251,11 +270,10 @@ function advanceQuestion (currentQ) {
     // give it to the card that WAS in the queue before this function was called
     nextQuestion.setAttribute("class", "game-card active");
     // check to see if this was the last question
-    if (currentQ !== 10) {
-        // since it is not, lets look at the next question (the +2 compensates
-        // for the 0 index AND is looking one question ahead, that is why we
-        // need the current question plus TWO)
-        var questionToQueue = document.querySelector("#question-" + (currentQ + 2));
+    if (currentQ !== 9) {
+        // since it is not, lets look at the next question (the +1 is looking
+        // one question ahead, that is why we need the current question plus ONE
+        var questionToQueue = document.querySelector("#question-" + (currentQ + 1));
         //give the next question the queued class
         questionToQueue.setAttribute("class", "game-card queued");
         // increase the count on the variable keeping track of this
@@ -267,15 +285,16 @@ function advanceQuestion (currentQ) {
     };
 }
 
-function answerQuestion (currentQ) {
+function answerQuestion () {
     var answerCorrectly = false;
     
     for (i=0; i < 4; i++) {
-        inputString = "q" + currentQ + "O" + (i + 1);
+        inputString = "q" + activeQuestion + "O" + (i);
         var currentSubmission = document.getElementById(inputString);
         //var currentSubmission = document.getElementById(inputString);
         if (currentSubmission.checked === true) {
-            if (document.getElementById(inputString).getAttribute("class") = "correct") {
+            console.log(document.getElementById(inputString).getAttribute("class"));
+            if (document.getElementById(inputString).getAttribute("class") == "correct") {
                 answerCorrectly = true;
                 currentScore += 10;
                 playerScore.textContent = currentScore;
@@ -288,14 +307,14 @@ function answerQuestion (currentQ) {
         if (secondsRemaining > timePenalty) {
             secondsRemaining -= timePenalty;
             cdSecs.textContent = secondsRemaining;
-            advanceQuestion(currentQ);
+            advanceQuestion(activeQuestion);
         } else if (minsRemaining === 1) {
             difference = timePenalty - secondsRemaining;
             minsRemaining = 0;
             cdMins.textContent = minsRemaining;
             secondsRemaining = 60 - difference;
             cdSecs.textContent = secondsRemaining;
-            advanceQuestion(currentQ);
+            advanceQuestion(activeQuestion);
         } else {
             endGame();
         }
@@ -312,7 +331,10 @@ function endGame() {
  * ========================================================================= */
 
 //looking for answer submissions
-answerBtn.onclick = answerQuestion(activeQuestion);
+for (var buttons of answerBtn){
+    buttons.addEventListener("click", function (answerQuestion) {
+    });
+};
 
 // if the players wants to play on easy
 difficultyEasy.addEventListener("click", function () {
@@ -330,7 +352,7 @@ difficultyEasy.addEventListener("click", function () {
     // start counting down
     countDownTime();
     // and go to the first question
-    advanceQuestion();
+    advanceFromStart ();
 });
 
 // same as easy but for intermediate
@@ -342,7 +364,7 @@ difficultyIntermediate.addEventListener("click", function () {
     cdMins.textContent = minsRemaining + ":"
     cdSecs.textContent = secondsRemaining;
     countDownTime();
-    advanceQuestion();
+    advanceFromStart ();
 });
 
 // same as easy but for hard
@@ -354,7 +376,7 @@ difficultyHard.addEventListener("click", function () {
     cdMins.textContent = minsRemaining + ":"
     cdSecs.textContent = secondsRemaining;
     countDownTime();
-    advanceQuestion();
+    advanceFromStart ();
 });
 
 // same as easy but for expert
@@ -366,7 +388,7 @@ difficultyExpert.addEventListener("click", function () {
     cdMins.textContent = minsRemaining + ":"
     cdSecs.textContent = secondsRemaining;
     countDownTime();
-    advanceQuestion();
+    advanceFromStart ();
 });
 
 // we pass our original question list of 12 objects through the randomizer function

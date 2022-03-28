@@ -55,7 +55,7 @@ body {
     display: flex;
     flex-flow:column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     align-self: center;
     min-width: 20rem;
     max-width: 80ch;
@@ -140,9 +140,4 @@ color: #fff;
     margin-right: 1.5em;
     font-size: 2rem;
     color:#fff;
-}
-
-.invisible {
-    position: fixed;
-    transform: scale(1) translateY(-200vh);
 }
