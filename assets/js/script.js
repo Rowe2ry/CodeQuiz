@@ -25,7 +25,7 @@ var playerScore = document.querySelector("#correct");
 // just starting values holding the score, penalty, and time
 var currentScore = 0;
 var minsRemaining = 0;
-var secondsRemaining = 50;
+var secondsRemaining = 0;
 var timePenalty = 0;
 
 // giving the active question a zero index for the difficulty selection card
@@ -241,6 +241,7 @@ function countDownTime () {
 
 // this updates the question the player is looking at
 function advanceQuestion (currentQ) {
+    console.log("advancing from question " + activeQuestion);
     // grab the current question card that has an active class
     var currentQuestion = document.querySelector(".active");
     // look for the next one on the queue
@@ -270,11 +271,11 @@ function answerQuestion (currentQ) {
     var answerCorrectly = false;
     
     for (i=0; i < 4; i++) {
-        // var currentSubmission = document.getElementById("q" + currentQ + "O" + (i + 1));
         inputString = "q" + currentQ + "O" + (i + 1);
         var currentSubmission = document.getElementById(inputString);
+        //var currentSubmission = document.getElementById(inputString);
         if (currentSubmission.checked === true) {
-            if (submittedAnswer.getAttribute("class") = "correct") {
+            if (document.getElementById(inputString).getAttribute("class") = "correct") {
                 answerCorrectly = true;
                 currentScore += 10;
                 playerScore.textContent = currentScore;
