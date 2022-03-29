@@ -29,7 +29,11 @@ var secondsRemaining = 1;
 var timePenalty = 0;
 
 // giving the active question a zero index for the difficulty selection card
-var activeQuestion = 0; //passing this into several functions as "currentQ"
+var activeQuestion = 0;
+var gameMode = "";
+var allotedTime;
+var timeElapsed = 0;
+var finalScore = 0;
 
 /* =========================================================================
  * Library of questions and answers as objects
@@ -258,8 +262,10 @@ function advanceFromStart () {
     questionToQueue.setAttribute("class", "game-card queued");
 }
 
+var lastQuestion = false;
+
 // this updates the question the player is looking at
-function advanceQuestion (currentQ) {
+function advanceQuestion () {
     console.log("advancing from question " + activeQuestion);
     // grab the current question card that has an active class
     var currentQuestion = document.querySelector(".active");
@@ -267,18 +273,25 @@ function advanceQuestion (currentQ) {
     var nextQuestion = document.querySelector(".queued");
     // strip the active class attribute from the current question
     currentQuestion.setAttribute("class", "game-card");
-    // give it to the card that WAS in the queue before this function was called
-    nextQuestion.setAttribute("class", "game-card active");
-    // check to see if this was the last question
-    if (currentQ !== 9) {
-        // since it is not, lets look at the next question (the +1 is looking
-        // one question ahead, that is why we need the current question plus ONE
-        var questionToQueue = document.querySelector("#question-" + (currentQ + 1));
+    // give active class to the card that WAS in the queue before this function was called
+    if (lastQuestion == false) {
+        nextQuestion.setAttribute("class", "game-card active");
+    }
+        // check to see if this was the last question
+    if (activeQuestion != 8 && activeQuestion != 9) {
+        // since it is not, lets look at the next question (the +2 is looking
+        // one question ahead PLUS offsetting the zero(0) index,
+        // that is why we need the current question plus two
+        var questionToQueue = document.querySelector("#question-" + ((activeQuestion) + 2));
         //give the next question the queued class
         questionToQueue.setAttribute("class", "game-card queued");
         // increase the count on the variable keeping track of this
         ++activeQuestion;
-    } else {
+    } else if (activeQuestion == 8) {
+        console.log("last question");
+        lastQuestion = true;
+        activeQuestion = 9;
+    } else if (activeQuestion == 9) {
         // there are no more questions to answer so the game is over
         // TODO: write the endGame function
         endGame();
@@ -294,11 +307,12 @@ function answerQuestion () {
         //var currentSubmission = document.getElementById(inputString);
         if (currentSubmission.checked === true) {
             console.log(document.getElementById(inputString).getAttribute("class"));
-            if (document.getElementById(inputString).getAttribute("class") == "correct") {
+            if (document.getElementById(inputString).getAttribute("class") == "choice correct") {
                 answerCorrectly = true;
                 currentScore += 10;
                 playerScore.textContent = currentScore;
-                advanceQuestion(currentQ);
+                console.log("added 10 to score");
+                advanceQuestion();
                 return;
             }
         }
@@ -307,14 +321,14 @@ function answerQuestion () {
         if (secondsRemaining > timePenalty) {
             secondsRemaining -= timePenalty;
             cdSecs.textContent = secondsRemaining;
-            advanceQuestion(activeQuestion);
+            advanceQuestion();
         } else if (minsRemaining === 1) {
             difference = timePenalty - secondsRemaining;
             minsRemaining = 0;
             cdMins.textContent = minsRemaining;
             secondsRemaining = 60 - difference;
             cdSecs.textContent = secondsRemaining;
-            advanceQuestion(activeQuestion);
+            advanceQuestion();
         } else {
             endGame();
         }
@@ -322,7 +336,45 @@ function answerQuestion () {
 };
 
 function endGame() {
-    // TODO: create score page, save the scores to local storage
+    if (secondsRemaining > 0) {
+        // checking to see if this is the first time the game has been won
+        if (window.localStorage.getItem("timesPlayed") === null) {
+            window.localStorage.setItem("timesPlayed", 1);
+        }
+        var gameIteration = Number(window.localStorage.getItem("timesPlayed"));
+        gameIteration++;
+        window.localStorage.setItem("timesPlayed", gameIteration);
+        /* =^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^
+        * the code section between the =^= and =v= comment lines
+        * is a date/tiome function taken from Stack overflow user
+        * Mark Walters */
+        var currentdate = new Date(); 
+        var datetime = "Last Sync: " + currentdate.getDate() + "/"
+                    + (currentdate.getMonth()+1)  + "/" 
+                    + currentdate.getFullYear() + " @ "  
+                    + currentdate.getHours() + ":"  
+                    + currentdate.getMinutes() + ":" 
+                    + currentdate.getSeconds();
+        // =v=v=v=v=v=v=v=v=v=v=v=v=v=v=v=v=v=v=v=v=v=v=v=v=v=v
+        finalScore = currentScore;
+        if (minsRemaining ==1) {
+            secondsRemaining = secondsRemaining + 60;
+        };
+        timeElapsed = allotedTime - secondsRemaining;
+        
+        var winningMessage = window.Propmpt("Congratulations! \n You earned " + currentScore + "out of 100 points. \n While playing on " + gameMode + " in just " + timeElapsed + " seconds! \n Please enter your initials");
+        var playerInitials = winningMessage.slice(0,3);
+        var winnerData = {
+            winNumber: gameIteration,
+            initials: playerInitials,
+            time2Complete: timeElapsed,
+            difficulty: gameMode,
+            time: datetime
+        }
+        JSON.stringify(winnerData);
+    } else {
+        window.alert("Sorry, you lost this time ☹️");
+    }
     window.location.href = "./scores.html";
 }
 
@@ -331,15 +383,189 @@ function endGame() {
  * ========================================================================= */
 
 //looking for answer submissions
-for (var buttons of answerBtn){
-    buttons.addEventListener("click", function (answerQuestion) {
+// for statement adds event listeners to all radio buttons
+/* for (var i; i < answerBtn.length; i++){
+    answerBtn[i].addEventListener("click", function () {
+        var submission = window.event;
+        answerQuestion(submission);
     });
-};
+}; */
+
+// I'm just making every single of the 40 radio buttons have
+// event listeners
+// I'll just say, I tried this as a "for" loop and had trouble
+// I might refactor later but this worked after hours of debugging
+// so I just wanted to leave these next 159 lines as-is
+answerBtn[0].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[1].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[2].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[3].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[4].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[5].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[6].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[7].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[8].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[9].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[10].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[11].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[12].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[13].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[14].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[15].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[16].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[17].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[18].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[19].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[20].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[21].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[22].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[23].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[24].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[25].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[26].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[27].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[28].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[29].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[30].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[31].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[32].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[33].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[34].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[35].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[36].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[37].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[38].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+answerBtn[39].addEventListener("click", function () {
+    var submission = window.event;
+    answerQuestion(submission);
+});
+
 
 // if the players wants to play on easy
 difficultyEasy.addEventListener("click", function () {
     // just keeping track of inputs
     console.log("Easy");
+    // logging the game mode into a variable
+    gameMode = "Easy";
+    // taking note of how much time the player gets in total seconds
+    allotedTime = 120;
     // setting the time penalty
     timePenalty = 3;
     // setting the minute number on the clock
@@ -358,6 +584,8 @@ difficultyEasy.addEventListener("click", function () {
 // same as easy but for intermediate
 difficultyIntermediate.addEventListener("click", function () {
     console.log("Intermediate");
+    gameMode = "Intermediate";
+    allotedTime = 105;
     timePenalty = 5;
     minsRemaining = 1;
     secondsRemaining = 45;
@@ -370,6 +598,8 @@ difficultyIntermediate.addEventListener("click", function () {
 // same as easy but for hard
 difficultyHard.addEventListener("click", function () {
     console.log("Hard");
+    gameMode = "Hard";
+    allotedTime = 75;
     timePenalty = 5;
     minsRemaining = 1;
     secondsRemaining = 15;
@@ -382,6 +612,8 @@ difficultyHard.addEventListener("click", function () {
 // same as easy but for expert
 difficultyExpert.addEventListener("click", function () {
     console.log("Expert");
+    gameMode = "Expert";
+    allotedTime = 50;
     timePenalty = 5;
     minsRemaining = 0;
     secondsRemaining = 50;
