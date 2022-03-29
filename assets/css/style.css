@@ -23,6 +23,10 @@ body {
     overflow: hidden;
 }
 
+.score-body {
+    overflow:visible;
+}
+
 .head-foot {
     margin: 0;
     background-image: linear-gradient( var(--light-blue-clr), var(--dark-blue-clr));
@@ -31,6 +35,13 @@ body {
     padding: 1.25em;
 }
 
+#pastScores {
+    overflow: scroll;
+}
+
+.score-footer {
+    position: static;
+}
 
 .my-header, .game-card, .question {
     display: flex;
@@ -64,7 +75,21 @@ body {
     overflow: hidden;
     transform: translateX(-100vw);
     position: absolute;
-    top: 20rem; 
+    top: 12rem; 
+}
+
+.score-card {
+    display: flex;
+    flex-flow:column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-self: center;
+    min-width: 20rem;
+    max-width: 80ch;
+    border: .125em solid #aaaaaa;
+    border-radius: 2em;
+    overflow: hidden;
+    margin: 7rem;
 }
 
 .queued {
@@ -140,4 +165,35 @@ color: #fff;
     margin-right: 1.5em;
     font-size: 2rem;
     color:#fff;
+}
+
+@media screen and (min-width: 1144px) {
+    .game-title {
+        font-size: 220%;
+        color: #FFF;
+        padding: .25em;
+    }
+    
+    .author {
+        color: #fff;
+        font-size: 150%;
+        padding: .5em;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .game-card {
+        min-width: none;
+    }
+}
+
+@media screen and (max-height: 600px) {
+    .my-header {
+        visibility: hidden;
+        position: fixed;
+    }
+    
+    .game-card {
+        top: 6rem;
+    }
 }
