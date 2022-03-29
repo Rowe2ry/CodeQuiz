@@ -140,7 +140,7 @@ questionSequence = [
 
 // a function to shuffle the array of objects that are the quiz questions
 // the idea here is that players cannot simply memorize which radio buttons
-// to press in a particular order ot cheat the high score
+// to press in a particular order to cheat the high score
 function randomizeQuestions(inputArray) {
     // creating an empty array to hold the random results as they are plucked
     // from the array going into the function
@@ -159,7 +159,7 @@ function randomizeQuestions(inputArray) {
         // grab that random object and remember it
         var objectToPull = deconstructedArray[randomNumber];
         console.log(objectToPull);
-        // take that object out of the input array, 2nd paramter says to just pull 1 object
+        // take that object out of the input array, 2nd parameter says to just pull 1 object
         deconstructedArray.splice(randomNumber, 1);
         // add it to the local scope variable holding array
         tempHoldingArray.push(objectToPull);
@@ -169,7 +169,7 @@ function randomizeQuestions(inputArray) {
         tempHoldingArray.shift();
         // remove the last object (11 - 1 = 10)
         tempHoldingArray.pop();
-        // spit out the new array, these are the 10 quick questions and
+        // spit out the new array, these are the 10 quiz questions and
         // the order they wil display on this playthrough the game
         console.log("The shuffled array has " + tempHoldingArray.length + " objects.");
         // output the shuffled array to the variable calling the function
