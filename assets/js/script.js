@@ -240,7 +240,7 @@ function countDownTime () {
         if (secondsRemaining === 0 && minsRemaining > 0) {
             secondsRemaining = 59;
             minsRemaining = 0;
-            cdMins.textContent = "0";
+            cdMins.textContent = "0:";
             cdSecs.textContent = secondsRemaining;
         }
         // this if statement launches the game end sequence by recognizing
@@ -383,7 +383,7 @@ function endGame() {
         window.localStorage.setItem("timesPlayed", gameIteration);
         /* =^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^=^
         * the code section between the =^= and =v= comment lines
-        * is a date/tiome function taken from Stack overflow user
+        * is a date/time function taken from Stack overflow user
         * Mark Walters */
         var currentdate = new Date(); 
         var datetime = currentdate.getDate() + "/"
@@ -673,5 +673,5 @@ difficultyExpert.addEventListener("click", function () {
 
 // we pass our original question list of 12 objects through the randomizer function
 shuffledSequence = randomizeQuestions(questionSequence);
-// runs the above defined function to get our onto the page
+// runs the above defined function to get our questions onto the page
 populatePage(shuffledSequence);
