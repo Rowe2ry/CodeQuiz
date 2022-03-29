@@ -8,7 +8,7 @@ var difficultyEasy = document.querySelector("#dif-easy");
 var difficultyIntermediate = document.querySelector("#dif-med");
 var difficultyHard = document.querySelector("#dif-hrd");
 var difficultyExpert = document.querySelector("#dif-expert");
-// any radio button on any queston card
+// any radio button on any question card returned as a node list 0-39
 var answerBtn = document.querySelectorAll(".choice");
 
 // minutes and seconds for the count down timer of the game
@@ -30,10 +30,18 @@ var timePenalty = 0;
 
 // giving the active question a zero index for the difficulty selection card
 var activeQuestion = 0;
+// this string is filled in when a difficulty is chosen
 var gameMode = "";
+// this is assigned when a difficulty is chosen, and is used to calculate
+// how quickly the player completes the quiz
 var allotedTime;
+// used to calculate how quickly the player completes the quiz
 var timeElapsed = 0;
+// keeps track of player performance throughout the game
 var finalScore = 0;
+// when we get to the last question, this boolean stops the script
+// from queuing the next question 
+var lastQuestion = false;
 
 /* =========================================================================
  * Library of questions and answers as objects
@@ -168,48 +176,48 @@ function randomizeQuestions(inputArray) {
         return tempHoldingArray;
     }
 
-    function populatePage(inputArray) {
-        // once for each element in the array
-        for (i = 0; i < inputArray.length; i++) {
-            // grab the HTML element for asking the question
-            var questionText = document.getElementById("q" + (i) + "Text");
-            // for the first radio button label
-            var questionOption1 = document.getElementById("q" + (i) + "O0label");
-            // for the second radio button label
-            var questionOption2 = document.getElementById("q" + (i) + "O1label");
-            // for the third radio button label
-            var questionOption3 = document.getElementById("q" + (i) + "O2label");
-            // for the fourth radio button label
-            var questionOption4 = document.getElementById("q" + (i) + "O3label");
-            // put the question on the page
-            questionText.textContent= inputArray[i].question;
-            // put the answer option 1 on the page
-            questionOption1.textContent = inputArray[i].answers[0];
-            // put the answer option 2 on the page
-            questionOption2.textContent = inputArray[i].answers[1];
-            // put the answer option 3 on the page
-            questionOption3.textContent = inputArray[i].answers[2];
-            // put the answer option 4 on the page
-            questionOption4.textContent = inputArray[i].answers[3];
-            // call out the radio buttons for these answers
-            var questionOptionBtn1 = document.getElementById("q" + (i) + "O0");
-            var questionOptionBtn2 = document.getElementById("q" + (i) + "O1");
-            var questionOptionBtn3 = document.getElementById("q" + (i) + "O2");
-            var questionOptionBtn4 = document.getElementById("q" + (i) + "O3");
-            // assign correct answers to each form
-            var thisAnswer = inputArray[i].correctAnswer;
-            // give the button a class of correct
-            if (thisAnswer === 0) {
-                questionOptionBtn1.setAttribute("class", "choice correct");
-            } else if (thisAnswer === 1) {
-                questionOptionBtn2.setAttribute("class", "choice correct");
-            } else if (thisAnswer === 2) {
-                questionOptionBtn3.setAttribute("class", "choice correct");
-            } else if (thisAnswer === 3) {
-                questionOptionBtn4.setAttribute("class", "choice correct");
-            }
+function populatePage(inputArray) {
+    // once for each element in the array
+    for (i = 0; i < inputArray.length; i++) {
+        // grab the HTML element for asking the question
+        var questionText = document.getElementById("q" + (i) + "Text");
+        // for the first radio button label
+        var questionOption1 = document.getElementById("q" + (i) + "O0label");
+        // for the second radio button label
+        var questionOption2 = document.getElementById("q" + (i) + "O1label");
+        // for the third radio button label
+        var questionOption3 = document.getElementById("q" + (i) + "O2label");
+        // for the fourth radio button label
+        var questionOption4 = document.getElementById("q" + (i) + "O3label");
+        // put the question on the page
+        questionText.textContent= inputArray[i].question;
+        // put the answer option 1 on the page
+        questionOption1.textContent = inputArray[i].answers[0];
+        // put the answer option 2 on the page
+        questionOption2.textContent = inputArray[i].answers[1];
+        // put the answer option 3 on the page
+        questionOption3.textContent = inputArray[i].answers[2];
+        // put the answer option 4 on the page
+        questionOption4.textContent = inputArray[i].answers[3];
+        // call out the radio buttons for these answers
+        var questionOptionBtn1 = document.getElementById("q" + (i) + "O0");
+        var questionOptionBtn2 = document.getElementById("q" + (i) + "O1");
+        var questionOptionBtn3 = document.getElementById("q" + (i) + "O2");
+        var questionOptionBtn4 = document.getElementById("q" + (i) + "O3");
+        // assign correct answers to each form
+        var thisAnswer = inputArray[i].correctAnswer;
+        // give the button a class of correct
+        if (thisAnswer === 0) {
+            questionOptionBtn1.setAttribute("class", "choice correct");
+        } else if (thisAnswer === 1) {
+            questionOptionBtn2.setAttribute("class", "choice correct");
+        } else if (thisAnswer === 2) {
+            questionOptionBtn3.setAttribute("class", "choice correct");
+        } else if (thisAnswer === 3) {
+            questionOptionBtn4.setAttribute("class", "choice correct");
         }
     }
+}
 
 // starts the game timer
 function countDownTime () {
@@ -246,7 +254,7 @@ function countDownTime () {
     }, 1000)
 }
 
-// this updates the question the player is looking at
+// this updates the question the player is looking at from the start
 function advanceFromStart () {
     console.log("advancing from welcome page");
     // grab the current question card that has an active class
@@ -261,8 +269,6 @@ function advanceFromStart () {
     var questionToQueue = document.getElementById("question-1");
     questionToQueue.setAttribute("class", "game-card queued");
 }
-
-var lastQuestion = false;
 
 // this updates the question the player is looking at
 function advanceQuestion () {
@@ -293,54 +299,85 @@ function advanceQuestion () {
         activeQuestion = 9;
     } else if (activeQuestion == 9) {
         // there are no more questions to answer so the game is over
-        // TODO: write the endGame function
         endGame();
     };
 }
 
+// whenever one of the radio buttons is clicked...
 function answerQuestion () {
+    // establish a status for the if statement conditions failing to be met
     var answerCorrectly = false;
     
+    // loop through the 4 radio buttons of the current question
     for (i=0; i < 4; i++) {
+        // below returns for example "q0O0" for question zero Option zero
         inputString = "q" + activeQuestion + "O" + (i);
+        // grab the radio button with the id of the string above
         var currentSubmission = document.getElementById(inputString);
-        //var currentSubmission = document.getElementById(inputString);
+        // see if this particular radio button was checked by the player
         if (currentSubmission.checked === true) {
+            // yes they checked this one
             console.log(document.getElementById(inputString).getAttribute("class"));
+            // if it was assigned a "class" attribute of "correct" by the page population
             if (document.getElementById(inputString).getAttribute("class") == "choice correct") {
+                // lets let this function know that was good
                 answerCorrectly = true;
+                // add to the score
                 currentScore += 10;
+                // update the score displayed on the page
                 playerScore.textContent = currentScore;
+                // give some feedback to the log
                 console.log("added 10 to score");
+                // and go to the next question
                 advanceQuestion();
+                // stop checking radio buttons for this questions because we just found the correct one
                 return;
             }
         }
     }
+    // if none of the correct if statements above were triggered, the below conditional
+    // should be met
     if (answerCorrectly === false) {
+        // so long as we still have time to subtract from
         if (secondsRemaining > timePenalty) {
+            // reduce that time by the penalty
             secondsRemaining -= timePenalty;
+            // update the remaining time on the page
             cdSecs.textContent = secondsRemaining;
+            // and go to the next question
             advanceQuestion();
+            // if we are trying to remove more seconds than remain, but
+            // we still have a full minute
         } else if (minsRemaining === 1) {
+            // find out the difference between our penalty, and the seconds place
             difference = timePenalty - secondsRemaining;
+            // take away the minute of time
             minsRemaining = 0;
+            // update the page to reflect 0 minutes
             cdMins.textContent = minsRemaining;
+            // remove the difference from a full 60 seconds
             secondsRemaining = 60 - difference;
+            // update the secods on the page
             cdSecs.textContent = secondsRemaining;
+            // and go to the next question
             advanceQuestion();
+            // otherwise, you have tried to deduct time to some negative number
+            // and are out of time so the game ends
         } else {
             endGame();
         }
     }
 };
 
+// when the game is over
 function endGame() {
+    // if they still have time when the game ends, they must have completed the quiz
     if (secondsRemaining > 0) {
         // checking to see if this is the first time the game has been won
         if (window.localStorage.getItem("timesPlayed") === null) {
-            window.localStorage.setItem("timesPlayed", 1);
+            window.localStorage.setItem("timesPlayed", 0);
         }
+        // update the number 
         var gameIteration = Number(window.localStorage.getItem("timesPlayed"));
         gameIteration++;
         window.localStorage.setItem("timesPlayed", gameIteration);
@@ -349,32 +386,43 @@ function endGame() {
         * is a date/tiome function taken from Stack overflow user
         * Mark Walters */
         var currentdate = new Date(); 
-        var datetime = "Last Sync: " + currentdate.getDate() + "/"
+        var datetime = currentdate.getDate() + "/"
                     + (currentdate.getMonth()+1)  + "/" 
                     + currentdate.getFullYear() + " @ "  
                     + currentdate.getHours() + ":"  
                     + currentdate.getMinutes() + ":" 
                     + currentdate.getSeconds();
         // =v=v=v=v=v=v=v=v=v=v=v=v=v=v=v=v=v=v=v=v=v=v=v=v=v=v
+
+        // grab the score
         finalScore = currentScore;
+        // if we have a minute left, add the 60 seconds to how many seconds are on the clock
         if (minsRemaining ==1) {
             secondsRemaining = secondsRemaining + 60;
         };
+        // subtract the starting time (in seconds) from the time left
         timeElapsed = allotedTime - secondsRemaining;
         
-        var winningMessage = window.Propmpt("Congratulations! \n You earned " + currentScore + "out of 100 points. \n While playing on " + gameMode + " in just " + timeElapsed + " seconds! \n Please enter your initials");
+        // tell the user they won and get their information
+        var winningMessage = window.prompt("Congratulations! \n You earned " + currentScore + " out of 100 points. \n While playing on " + gameMode + " in just " + timeElapsed + " seconds! \n Please enter your initials");
+        // w asked the player for initials, so just grab 3 characters
         var playerInitials = winningMessage.slice(0,3);
+        // store the information from the game in an object
         var winnerData = {
-            winNumber: gameIteration,
             initials: playerInitials,
             time2Complete: timeElapsed,
             difficulty: gameMode,
             time: datetime
-        }
-        JSON.stringify(winnerData);
+        };
+        // convert the object to a JSON string for storage
+        winnerData = JSON.stringify(winnerData);
+        // store the string under a new key each time (the winner and the play iteration)
+        window.localStorage.setItem("winner" + gameIteration, winnerData);
     } else {
+        // if they were out of time, they lost so let them know
         window.alert("Sorry, you lost this time ☹️");
     }
+    // go view the high scores
     window.location.href = "./scores.html";
 }
 
