@@ -73,7 +73,7 @@ var quizQuestion3 = {
 
 var quizQuestion4 = {
     question: "CSS: Which of the following is NOT a valid way to define a color?",
-    answers: ["#a1b2c3", "cmky(40, 45, 33, 10)", "rgba(200, 15, 33, 1)", "hsl(128, 88, 44)"],
+    answers: ["#a1b2c3", "cmyk(40, 45, 33, 10)", "rgba(200, 15, 33, 1)", "hsl(128, 88, 44)"],
     correctAnswer: 1 // index #
 };
 
@@ -410,6 +410,7 @@ function endGame() {
         // store the information from the game in an object
         var winnerData = {
             initials: playerInitials,
+            score: currentScore,
             time2Complete: timeElapsed,
             difficulty: gameMode,
             time: datetime

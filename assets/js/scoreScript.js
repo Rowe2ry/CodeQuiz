@@ -18,6 +18,8 @@ for (i = 1; i <= gameIteration; i++) {
     var paragraph = document.createElement("p");
     paragraph.textContent = "Initials: " +
         winner.initials +
+        " --- Score out of 100: " +
+        winner.score +
         " --- Time to complete: " +
         winner.time2Complete +
         " --- Difficulty Level: " +
