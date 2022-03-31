@@ -18,6 +18,10 @@ var cdSecs = document.querySelector("#seconds");
 // the score being kept as the game plays (the element on the page);
 var playerScore = document.querySelector("#correct");
 
+// linking to sounds for events
+var goodSound = document.querySelector("#answerGood");
+var badSound = document.querySelector("#answerBad");
+
 /* =========================================================================
  * Global scope variable declarations
  * ========================================================================= */
@@ -320,6 +324,8 @@ function answerQuestion () {
             console.log(document.getElementById(inputString).getAttribute("class"));
             // if it was assigned a "class" attribute of "correct" by the page population
             if (document.getElementById(inputString).getAttribute("class") == "choice correct") {
+                // play a happy sound
+                goodSound.play();
                 // lets let this function know that was good
                 answerCorrectly = true;
                 // add to the score
@@ -340,6 +346,8 @@ function answerQuestion () {
     if (answerCorrectly === false) {
         // so long as we still have time to subtract from
         if (secondsRemaining > timePenalty) {
+            // play a sad sound
+            badSound.play();
             // reduce that time by the penalty
             secondsRemaining -= timePenalty;
             // update the remaining time on the page
