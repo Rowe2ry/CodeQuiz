@@ -148,9 +148,9 @@ questionSequence = [
 function randomizeQuestions(inputArray) {
     // creating an empty array to hold the random results as they are plucked
     // from the array going into the function
-    console.log("I'm shuffling");
+    // console.log("I'm shuffling");
     var deconstructedArray = inputArray;
-    console.log("the input array length is " + inputArray.length);
+    // console.log("the input array length is " + inputArray.length);
     var tempHoldingArray = [];
     // a for loop will cycle through the whole array pulling a random element
     // one at a time
@@ -162,23 +162,23 @@ function randomizeQuestions(inputArray) {
         var randomNumber = Math.floor(Math.random() * deconstructedArray.length);
         // grab that random object and remember it
         var objectToPull = deconstructedArray[randomNumber];
-        console.log(objectToPull);
+        // console.log(objectToPull);
         // take that object out of the input array, 2nd parameter says to just pull 1 object
         deconstructedArray.splice(randomNumber, 1);
         // add it to the local scope variable holding array
         tempHoldingArray.push(objectToPull);
         } // end for loop
-        console.log("shuffle completed");
+        // console.log("shuffle completed");
         // remove the object from the front of the list (12 - 1 = 11)
         tempHoldingArray.shift();
         // remove the last object (11 - 1 = 10)
         tempHoldingArray.pop();
         // spit out the new array, these are the 10 quiz questions and
         // the order they wil display on this playthrough the game
-        console.log("The shuffled array has " + tempHoldingArray.length + " objects.");
+        // console.log("The shuffled array has " + tempHoldingArray.length + " objects.");
         // output the shuffled array to the variable calling the function
         return tempHoldingArray;
-    }
+    };
 
 function populatePage(inputArray) {
     // once for each element in the array
